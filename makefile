@@ -8,6 +8,9 @@ CXXFLAGS = -std=c++17 -Wall -Wshadow
 SRCS = $(shell find $(SRCS_DIR) -name '*.cpp' -or -name '*.c')
 OBJS = $(SRCS:%=$(BUILD_DIR)/%.o)
 
+$(info SRCS = $(SRCS))
+$(info OBJS = $(OBJS))
+
 -include $(shell find $(BUILD_DIR) -name '*.d')
 
 game: $(OBJS)
