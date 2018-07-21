@@ -1,7 +1,7 @@
 BUILD_DIR = build
 SRCS_DIR = src
 
-INCLUDE_FLAGS = 
+INCLUDE_FLAGS = -I./src
 LD_FLAGS = -lpthread -lsfml-graphics -lsfml-window -lsfml-system
 CXXFLAGS = -std=c++17 -Wall -Wshadow
 

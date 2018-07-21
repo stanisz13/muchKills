@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Storage.hpp"
-#include "hero.hpp"
+#include <Game.hpp>
 #include "Logger.hpp"
 
 int main()
@@ -16,19 +16,9 @@ int main()
     log << "vec: " << v << ' ' << "pair: " << p << "\n";
 
     sf::RenderWindow window(sf::VideoMode(1900, 900), "SFML works!");
-    sf::CircleShape shape(100.f);
-    shape.setFillColor(sf::Color::Green);
+    Storage<sf::RenderWindow*>::add("window", &window);
 
-    Hero boi;
-
-    sf::Texture boiTex;
-    boiTex.loadFromFile("assets/boi.jpg");
-    
-    boi.sprite.setTexture(boiTex);
-    sf::Vector2u boiTexDim = boiTex.getSize();
-    boi.sprite.setTextureRect(sf::IntRect(0, 0, boiTexDim.x, boiTexDim.y));
-    boi.sprite.setColor(sf::Color(255, 255, 255, 200));    
-    
+    Game::init(&window);
 
     while (window.isOpen())
     {
@@ -39,8 +29,10 @@ int main()
                 window.close();
         }
 
+        Game::update(0);
+
         window.clear();
-        window.draw(boi.sprite);
+        Game::draw();
         window.display();
     }
 
