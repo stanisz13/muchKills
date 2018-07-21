@@ -29,27 +29,26 @@ public:
         std::cout << t; return *this;
     }
 
-    template <class T> 
+    template <class T, class I = typename T::iterator> 
     typename std::enable_if<!LoggerStuff::canWrite<T>::value, Logger&>::type
     operator<<(const T& t)
     {
-        if constexpr (LoggerStuff::isPair<T>::value)
+        *this << "{";
+        for(auto i = t.begin(); i != t.end();)
         {
-            return *this << "(" << t.first << "," << t.second << ")";
-        }
-        else
-        {
-            *this << "{";
-            for(auto i = t.begin(); i != t.end();)
-            {
-                *this << *i;
-                if(++i != t.end())
-                    *this << ' ';
-            }
-
-            return (*this << "}");
+            *this << *i;
+            if(++i != t.end())
+                *this << ' ';
         }
 
+        return (*this << "}");
+    }
+
+    template <class A, class B> 
+    typename std::enable_if<!LoggerStuff::canWrite<std::pair<A,B>>::value, Logger&>::type
+    operator<<(const std::pair<A, B>& p)
+    {
+        return *this << "(" << p.first << ", " << p.second << ")";
     }
 
     template <class... Args> void operator()(const Args&... args)
