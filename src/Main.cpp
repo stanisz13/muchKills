@@ -18,7 +18,7 @@ int main()
     sf::RenderWindow window(sf::VideoMode(1900, 900), "SFML works!");
     Storage<sf::RenderWindow*>::add("window", &window);
 
-    Game::init(&window);
+    Game::init();
 
     sf::Clock cock;
 

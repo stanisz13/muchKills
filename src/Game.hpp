@@ -3,7 +3,7 @@
 
 namespace Game
 {
-    void init(sf::RenderWindow* theWindow);
+    void init();
     void update(float deltaTime);
     void draw();
     void deinit();

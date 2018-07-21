@@ -19,9 +19,9 @@ namespace Game
     Hero boi;
     sf::Texture boiTex;
 
-    void init(sf::RenderWindow* theWindow)
+    void init()
     {
-        window = theWindow;
+        window = Storage<sf::RenderWindow*>::get("window");
 
         boiTex.loadFromFile("assets/boi.jpg");
 
