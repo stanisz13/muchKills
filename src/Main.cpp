@@ -6,6 +6,9 @@
 
 int main()
 {
+    vec2<int> vec;
+    vec -= 2;
+
     Storage<int>::add("trojka", 3);
     std::cout << Storage<int>::get("trojka") << '\n';
 

@@ -1,12 +1,12 @@
 #pragma once
 #include <math.h>
 
-template<typename T> struct vector2 {
+template<typename T> struct vec2 {
     T x;
     T y;
 
-    vector2();
-    vector2(T val1, T val2) {
+    vec2(){};
+    vec2(T val1, T val2) {
         x = val1;
         y = val2;
     }
@@ -31,24 +31,24 @@ template<typename T> struct vector2 {
     }
 
     template<typename T2>
-    vector2<T> operator+ (const vector2<T2>& other) const {
+    vec2<T> operator+ (const vec2<T2>& other) const {
         T X = x + (T)other.x;
         T Y = y + (T)other.y;
-        return vector2<T>{X, Y};
+        return vec2<T>{X, Y};
     }
     template<typename T2>
-    vector2<T> operator+= (const vector2<T2>& other) {
+    vec2<T> operator+= (const vec2<T2>& other) {
         x += (T)other.x;
         y += (T)other.y;
     }
     template<typename T2>
-    vector2<T> operator- (const vector2<T2>& other) const {
+    vec2<T> operator- (const vec2<T2>& other) const {
         T X = x - (T)other.x;
         T Y = y - (T)other.y;
-        return vector2<T>{X, Y};
+        return vec2<T>{X, Y};
     }
     template<typename T2>
-    vector2<T> operator-= (const vector2<T2>& other) {
+    vec2<T> operator-= (const vec2<T2>& other) {
         x -= (T)other.x;
         y -= (T)other.y;
     }
@@ -56,12 +56,17 @@ template<typename T> struct vector2 {
     float lenght() const {
         return sqrt(x*x + y*y);
     }
-    vector2<T> normalize() {
+    vec2<T> normalize() {
         float len = this->lenght();
         if(len == 0)
-            return;
+            return *this;
         x /= len;
         y /= len;
         return *this;
     }
 };
+
+
+using vec2f = vec2<float>;
+using vec2i = vec2<float>;
+using vec2u = vec2<unsigned>;
