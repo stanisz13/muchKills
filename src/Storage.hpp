@@ -4,6 +4,7 @@
 template <class T>
 class Storage
 {
+    
 public:
     static void add(const char* name, const T& t){storage[name] = t;}
     static void add(const char* name, T&& t){storage[name] = t;}
