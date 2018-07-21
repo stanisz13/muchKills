@@ -1,49 +1,14 @@
 #pragma once
 #include <math.h>
-#include <SFML/Graphics.hpp>
 
 template<typename T> struct vec2 {
     T x;
     T y;
 
-    vec2(){};
+    vec2();
     vec2(T val1, T val2) {
         x = val1;
         y = val2;
-    }
-
-    vec2<T>(const sf::Vector2f& V)
-    {
-        x = V.x;
-        y = V.y;
-    }
-
-    vec2<T>(const sf::Vector2i& V)
-    {
-        x = V.x;
-        y = V.y;
-    }
-    vec2<T>(const sf::Vector2u& V)
-    {
-        x = V.x;
-        y = V.y;
-    }
-    void operator = (const sf::Vector2f& V)
-    {
-        x = V.x;
-        y = V.y;
-    }
-
-    void operator = (const sf::Vector2i& V)
-    {
-        x = V.x;
-        y = V.y;
-    }
-
-    void operator = (const sf::Vector2u& V)
-    {
-        x = V.x;
-        y = V.y;
     }
 
     template<typename T2> void operator+= (T2 num) {
@@ -99,13 +64,4 @@ template<typename T> struct vec2 {
         y /= len;
         return *this;
     }
-
-    operator sf::Vector2f() const {return {x, y};}
-    operator sf::Vector2i() const {return {x, y};}
-    operator sf::Vector2u() const {return {x, y};}
 };
-
-
-using vec2f = vec2<float>;
-using vec2i = vec2<float>;
-using vec2u = vec2<unsigned>;
