@@ -4,5 +4,5 @@
 
 struct Hero : Entity
 {
-    float speed = 400;
+
 };

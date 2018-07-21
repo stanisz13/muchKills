@@ -1,13 +1,14 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <vector.hpp>
 
 using namespace sf;
 
 struct Entity
 {
     sf::Sprite sprite;
-    sf::Vector2f pos;
+    vec2f pos;
     float speed = 400;
 
-    void move(const Vector2f& newPos);
+    void move(const vec2f& newPos);
 };

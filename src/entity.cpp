@@ -2,7 +2,7 @@
 
 using namespace sf;
 
-void Entity::move(const Vector2f& newPos) {
+void Entity::move(const vec2f& newPos) {
     pos = pos + newPos;
     sprite.setPosition(pos);
 }

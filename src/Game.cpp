@@ -8,14 +8,7 @@
 #include "Storage.hpp"
 #include "Logger.hpp"
 #include "hero.hpp"
-
-Logger& operator<<(Logger&, const sf::Vector2f v)
-{
-    say<<v.x<<' '<<v.y;
-    return say;
-}
-
-
+#include <vector.hpp>
 
 namespace Game
 {
@@ -23,7 +16,7 @@ namespace Game
     Hero boi;
     sf::Texture boiTex;
     sf::Texture enemyTex;
-    unsigned enemiesNumber = 10;
+    unsigned enemiesNumber = 1000;
     std::vector<Enemy> enemies;
 
 
@@ -35,23 +28,23 @@ namespace Game
         enemyTex.loadFromFile("assets/enemy.jpg");
 
         boi.sprite.setTexture(boiTex);
-        sf::Vector2u boiTexDim = boiTex.getSize();
+        vec2u boiTexDim = boiTex.getSize();
         boi.sprite.setTextureRect(sf::IntRect(0, 0, boiTexDim.x, boiTexDim.y));
         boi.sprite.setColor(sf::Color(255, 255, 255, 255));
         boi.sprite.scale(0.1f, 0.1f);
 
-        sf::Vector2u windowDim = window->getSize();
+        vec2u windowDim = window->getSize();
 
         for(unsigned i = 0; i<enemiesNumber; ++i)
         {
             Enemy cur;
             cur.sprite.setTexture(enemyTex);
-            sf::Vector2u enemyTexDim = enemyTex.getSize();
+            vec2u enemyTexDim = enemyTex.getSize();
             cur.sprite.setTextureRect(sf::IntRect(0, 0, enemyTexDim.x, enemyTexDim.y));
             cur.sprite.setColor(sf::Color(255, 255, 255, 255));
-            cur.pos = {windowDim.x / 2 + sin(i) * 300, windowDim.y / 2 + cos(i) * 300};
+            cur.pos = vec2f{windowDim.x / 2 + sin(i) * 300, windowDim.y / 2 + cos(i) * 300};
             cur.sprite.setPosition(cur.pos);
-            cur.sprite.scale(0.3f, 0.3f);// = 0.3;
+            cur.sprite.scale(0.08f, 0.08f);
 
             enemies.emplace_back(cur);
         }
@@ -61,30 +54,26 @@ namespace Game
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
             window->close();
 
-        sf::Vector2f toMove(0, 0);
+        vec2f toMove(0, 0);
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
         {
-            toMove += sf::Vector2f(0, -1);
+            toMove += vec2f(0, -1);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
         {
-            toMove += sf::Vector2f(0, 1);
+            toMove += vec2f(0, 1);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
         {
-            toMove += sf::Vector2f(1, 0);
+            toMove += vec2f(1, 0);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
         {
-            toMove += sf::Vector2f(-1, 0);
+            toMove += vec2f(-1, 0);
         }
 
-        float len = sqrt(toMove.x * toMove.x + toMove.y * toMove.y);
-
-        if (len != 0)
-            toMove /= len;
-
+        toMove.normalize();
         toMove *= boi.speed * deltaTime;
 
         boi.move(toMove);
@@ -95,7 +84,6 @@ namespace Game
     {
         for (unsigned i = 0; i<enemiesNumber; ++i)
         {
-            say<<enemies[i].pos<<"\n";
             window->draw(enemies[i].sprite);
         }
         //std::this_thread::sleep_for(std::chrono::seconds(10));
