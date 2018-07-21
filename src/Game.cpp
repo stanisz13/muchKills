@@ -53,7 +53,7 @@ namespace Game
         {
             toMove += sf::Vector2f(-1, 0);
         }
-        
+
         float len = sqrt(toMove.x * toMove.x + toMove.y * toMove.y);
 
         if (len != 0)
