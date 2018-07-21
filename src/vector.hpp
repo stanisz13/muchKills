@@ -75,6 +75,8 @@ template<typename T> struct vec2 {
     vec2<T> operator+= (const vec2<T2>& other) {
         x += (T)other.x;
         y += (T)other.y;
+
+        return *this;
     }
     template<typename T2>
     vec2<T> operator- (const vec2<T2>& other) const {
@@ -86,6 +88,8 @@ template<typename T> struct vec2 {
     vec2<T> operator-= (const vec2<T2>& other) {
         x -= (T)other.x;
         y -= (T)other.y;
+
+        return *this;
     }
 
     float lenght() const {
