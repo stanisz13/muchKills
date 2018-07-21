@@ -20,8 +20,12 @@ int main()
 
     Game::init(&window);
 
+    sf::Clock cock;
+
     while (window.isOpen())
     {
+        float dt = cock.restart().asSeconds();
+
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -29,7 +33,7 @@ int main()
                 window.close();
         }
 
-        Game::update(0);
+        Game::update(dt);
 
         window.clear();
         Game::draw();
