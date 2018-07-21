@@ -1,4 +1,3 @@
 #include "Logger.hpp"
 
-Logger log;
-
+Logger say;

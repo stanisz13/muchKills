@@ -22,14 +22,14 @@ struct isPair<std::pair<A, B>> : std::true_type {};
 class Logger
 {
 public:
-    template <class T> 
+    template <class T>
     typename std::enable_if<LoggerStuff::canWrite<T>::value, Logger&>::type
     operator<<(const T& t)
     {
         std::cout << t; return *this;
     }
 
-    template <class T, class I = typename T::iterator> 
+    template <class T, class I = typename T::iterator>
     typename std::enable_if<!LoggerStuff::canWrite<T>::value, Logger&>::type
     operator<<(const T& t)
     {
@@ -44,7 +44,7 @@ public:
         return (*this << "}");
     }
 
-    template <class A, class B> 
+    template <class A, class B>
     typename std::enable_if<!LoggerStuff::canWrite<std::pair<A,B>>::value, Logger&>::type
     operator<<(const std::pair<A, B>& p)
     {
@@ -54,9 +54,8 @@ public:
     template <class... Args> void operator()(const Args&... args)
     {
         auto t = {(*this << (args), 0)...};
-        reinterpret_cast<int&>(t)++; //shut up warnings        
+        reinterpret_cast<int&>(t)++; //shut up warnings
     }
 };
 
-extern Logger log;
-
+extern Logger say;
