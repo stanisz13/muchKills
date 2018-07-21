@@ -1,7 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include "Storage.hpp"
-#include <Game.hpp>
+#include "Game.hpp"
 #include "Logger.hpp"
 
 int main()
