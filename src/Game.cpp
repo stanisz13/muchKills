@@ -42,7 +42,9 @@ namespace Game
             vec2u enemyTexDim = enemyTex.getSize();
             cur.sprite.setTextureRect(sf::IntRect(0, 0, enemyTexDim.x, enemyTexDim.y));
             cur.sprite.setColor(sf::Color(255, 255, 255, 255));
-            cur.pos = vec2f{windowDim.x / 2 + sin(i) * 300, windowDim.y / 2 + cos(i) * 300};
+            float inX = (float)sin(i) * 300 + windowDim.x / 2;
+            float inY = (float)cos(i) * 300 + windowDim.y / 2;
+            cur.pos = vec2f{inX, inY};
             cur.sprite.setPosition(cur.pos);
             cur.sprite.scale(0.08f, 0.08f);
 
