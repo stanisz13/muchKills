@@ -1,11 +1,11 @@
-#include <Game.hpp>
-#include <SFML/Graphics.hpp>
-#include <Storage.hpp>
-#include <Logger.hpp>
-#include <hero.hpp>
 #include <cmath>
+#include <SFML/Graphics.hpp>
+#include "Game.hpp"
+#include "Storage.hpp"
+#include "Logger.hpp"
+#include "hero.hpp"
 
-Logger& operator<<(Logger& LOG, const sf::Vector2f v)
+Logger& operator<<(Logger&, const sf::Vector2f v)
 {
     say<<v.x<<' '<<v.y;
     return say;
