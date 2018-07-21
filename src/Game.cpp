@@ -1,8 +1,8 @@
-#include "Game.hpp"
+#include <Game.hpp>
 #include <SFML/Graphics.hpp>
 #include <Storage.hpp>
 #include <Logger.hpp>
-#include "hero.hpp"
+#include <hero.hpp>
 
 namespace Game
 {
@@ -13,7 +13,6 @@ namespace Game
     void init(sf::RenderWindow* theWindow)
     {   
         window = theWindow;
-        log << "window: " << window << '\n';
 
         boiTex.loadFromFile("assets/boi.jpg");
 
@@ -25,8 +24,8 @@ namespace Game
 
     void update(float deltaTime)
     {
-        //if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
-          //  window->close();
+        if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
+            window->close();
     }
 
     void draw()
