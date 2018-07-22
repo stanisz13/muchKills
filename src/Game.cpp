@@ -9,6 +9,7 @@
 #include "Logger.hpp"
 #include "hero.hpp"
 #include <vector.hpp>
+#include "BloodSplatter.hpp"
 
 namespace Game
 {
@@ -19,10 +20,19 @@ namespace Game
     unsigned enemiesNumber = 15;
     std::vector<Enemy> enemies;
 
+    std::vector<BloodSplatter> bloodSplats;
 
+    vec2f mid;
+    
     void init()
     {
         window = Storage<sf::RenderWindow*>::get("window");
+
+        Storage<sf::Texture>::add("blood0", {}).loadFromFile("assets/blood0.png");
+        Storage<sf::Texture>::add("blood1", {}).loadFromFile("assets/blood1.png");
+        Storage<sf::Texture>::add("blood2", {}).loadFromFile("assets/blood2.png");
+        Storage<sf::Texture>::add("blood3", {}).loadFromFile("assets/blood3.png");
+        Storage<sf::Texture>::add("blood4", {}).loadFromFile("assets/blood4.png");
 
         boiTex.loadFromFile("assets/boi.jpg");
         enemyTex.loadFromFile("assets/enemy.jpg");
@@ -34,6 +44,9 @@ namespace Game
         boi.sprite.scale(0.1f, 0.1f);
 
         vec2u windowDim = window->getSize();
+        mid.x = windowDim.x/2;
+        mid.y = windowDim.y/2;
+        say("mid: ", mid, "\n");
 
         for(unsigned i = 0; i<enemiesNumber; ++i)
         {
@@ -51,9 +64,13 @@ namespace Game
 
             enemies.emplace_back(cur);
         }
+
     }
     void update(float deltaTime)
     {
+        if(bloodSplats.size() < 1)
+            bloodSplats.emplace_back(mid, vec2f(20, 0));
+
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
             window->close();
 
@@ -80,7 +97,19 @@ namespace Game
         toMove *= boi.speed * deltaTime;
 
         boi.move(toMove);
+        
 
+        std::vector<int> toDelete;
+        for(auto& bloodSplat : bloodSplats)
+        {
+            bloodSplat.update(deltaTime);
+
+            if(bloodSplat.isFinished())
+                toDelete.emplace_back(&bloodSplat-&bloodSplats.front());
+        }
+
+        for(int i = toDelete.size()-1; i >= 0; i--)
+            bloodSplats.erase(bloodSplats.begin() + toDelete[i]);
         for (auto&& e : enemies)
         {
             e.moveAccordingly(boi.pos, enemies, deltaTime);
@@ -96,6 +125,9 @@ namespace Game
         //std::this_thread::sleep_for(std::chrono::seconds(10));
 
         window->draw(boi.sprite);
+
+        for(auto& bloodSplat : bloodSplats)
+            bloodSplat.draw(*window);
     }
 
     void deinit()

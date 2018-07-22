@@ -6,7 +6,9 @@
 
 int main()
 {
-    sf::RenderWindow window(sf::VideoMode(1900, 900), "SFML works!");
+    srand(time(NULL));
+
+    sf::RenderWindow window(sf::VideoMode(1500, 900), "SFML works!");
     Storage<sf::RenderWindow*>::add("window", &window);
 
     Game::init();
