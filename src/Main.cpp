@@ -8,7 +8,12 @@ int main()
 {
     srand(time(NULL));
 
+    sf::View camera;
+    vec2i cameraDims(1600, 900);
+    camera.reset(sf::FloatRect(-cameraDims.x/2, -cameraDims.y/2, cameraDims.x, cameraDims.y));
+
     sf::RenderWindow window(sf::VideoMode(1500, 900), "SFML works!");
+    window.setView(camera);
     Storage<sf::RenderWindow*>::add("window", &window);
 
     Game::init();
