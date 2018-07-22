@@ -38,5 +38,7 @@ int main()
         window.display();
     }
 
+    Game::deinit();
+
     return 0;
 }

@@ -7,7 +7,7 @@
 
 struct BloodSplatter
 {
-    BloodSplatter(vec2f position, vec2f force, int dropsNum = 20);
+    BloodSplatter(vec2f position, vec2f force, vec2f initialSpeed, int dropsNum = 20);
 
     void update(float deltaTime);
     void draw(sf::RenderWindow& window);

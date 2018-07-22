@@ -10,7 +10,7 @@
 #include "hero.hpp"
 #include <vector.hpp>
 #include "BloodSplatter.hpp"
-
+#include <sound.hpp>
 
 
 namespace Game
@@ -20,7 +20,7 @@ namespace Game
     sf::Texture boiTex;
     sf::Texture enemyTex;
     unsigned enemiesNumber = 15;
-    float bloodForce = 15.0f;
+    float bloodForce = 10.0f;
     std::vector<Enemy*> enemies;
 
 
@@ -77,12 +77,11 @@ namespace Game
         {
             e->setBox(e->pos, e->sprite.getTexture()->getSize());
         }
+
+        SoundManager::initSoundFiles();
     }
     void update(float deltaTime)
     {
-        if(bloodSplats.size() < 1)
-            bloodSplats.emplace_back(vec2f(0, 0), vec2f(20, 0));
-
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
             window->close();
 
@@ -124,9 +123,10 @@ namespace Game
             Enemy* e = enemies[i];
             if (collides(enemies[i]->box, boi.box))
             {
-                bloodSplats.emplace_back(enemies[i]->pos, vec2f(boi.pos - enemies[i]->pos).normalize() * -bloodForce);
-                boi.accelerate(vec2f(boi.pos - enemies[i]->pos).normalize() * bloodForce * 0.4f);
+                boi.accelerate(vec2f(boi.pos - enemies[i]->pos).normalize() * boi.knockbackAff);
+                bloodSplats.emplace_back(enemies[i]->pos, vec2f(boi.pos - enemies[i]->pos).normalize() * -bloodForce*0.4, vec2f(0, 500), 50);
                 enemies.erase(enemies.begin() + i);
+                SoundManager::play("hit");
                 delete e;
             }
         }
@@ -159,18 +159,19 @@ namespace Game
 
         }
         //std::this_thread::sleep_for(std::chrono::seconds(10));
+        for(auto& bloodSplat : bloodSplats)
+            bloodSplat.draw(*window);
 
         window->draw(boi.sprite);
 
 
 
-        for(auto& bloodSplat : bloodSplats)
-            bloodSplat.draw(*window);
     }
 
     void deinit()
     {
-
+        for (unsigned i = 0; i<enemies.size(); ++i)
+            delete enemies[i];
 
     }
 }

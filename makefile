@@ -2,7 +2,7 @@ BUILD_DIR = build
 SRCS_DIR = src
 
 INCLUDE_FLAGS = -I./src
-LD_FLAGS = -lpthread -lsfml-graphics -lsfml-window -lsfml-system
+LD_FLAGS = -lpthread -lsfml-graphics -lsfml-window -lsfml-system -lsfml-audio
 CXXFLAGS = -std=c++17 -Wall -Wshadow -fsanitize=undefined -fsanitize=address
 
 SRCS = $(shell find $(SRCS_DIR) -name '*.cpp' -or -name '*.c')
