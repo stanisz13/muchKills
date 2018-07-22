@@ -6,48 +6,31 @@ template<typename T> struct vec2 {
     T x;
     T y;
 
-    vec2(){};
+    vec2() {
+        x = 0;
+        y = 0;
+    }
     vec2(T val1, T val2) {
         x = val1;
         y = val2;
     }
 
-    vec2<T>(const sf::Vector2f& V)
-    {
-        x = V.x;
-        y = V.y;
-    }
-
-    vec2<T>(const sf::Vector2i& V)
-    {
-        x = V.x;
-        y = V.y;
-    }
-    vec2<T>(const sf::Vector2u& V)
-    {
-        x = V.x;
-        y = V.y;
-    }
-    void operator = (const sf::Vector2f& V)
-    {
-        x = V.x;
-        y = V.y;
-    }
-
-    void operator = (const sf::Vector2i& V)
-    {
-        x = V.x;
-        y = V.y;
-    }
-
-    void operator = (const sf::Vector2u& V)
-    {
+    template <typename T2>
+    vec2<T>(const T2& V) {
         x = V.x;
         y = V.y;
     }
 
     template<typename T2>
-    vec2<T> operator/ (T2 num) {
+    void operator = (const T2& V) {
+        x = V.x;
+        y = V.y;
+    }
+
+    template<typename T2>
+    vec2<T> operator/ (const T2& num) {
+        if(num == 0)
+            return {x, y};
         return {x/num, y/num};
     }
     template<typename T2>
@@ -55,19 +38,23 @@ template<typename T> struct vec2 {
         return {x*(T)num, y*(T)num};
     }
 
-    template<typename T2> void operator+= (T2 num) {
+    template<typename T2>
+    void operator+= (const T2& num) {
         x += num;
         y += num;
     }
-    template<typename T2> void operator-= (T2 num) {
+    template<typename T2>
+    void operator-= (const T2& num) {
         x -= num;
         y -= num;
     }
-    template<typename T2> void operator*= (T2 num) {
+    template<typename T2>
+    void operator*= (const T2& num) {
         x *= num;
         y *= num;
     }
-    template<typename T2> void operator/= (T2 num) {
+    template<typename T2>
+    void operator/= (const T2& num) {
         if(num == 0)
             return;
         x /= num;
@@ -95,6 +82,10 @@ template<typename T> struct vec2 {
         return *this;
     }
 
+    vec2<T> operator- () {
+        return vec2<T>{-x, -y};
+    }
+
     float lenght() const {
         return sqrt(x*x + y*y);
     }
@@ -120,8 +111,7 @@ template<typename T> struct vec2 {
             y = 0;
     }
 
-    template<typename T2>
-    bool operator== (const vec2<T2>& other) const {
+    template<typename T2> bool operator== (const vec2<T2>& other) const {
         if(!std::is_same<T, T2>::value)
             return 0;
         if(std::is_same<T, float>::value || std::is_same<T, double>::value) {
@@ -135,8 +125,7 @@ template<typename T> struct vec2 {
             return x == other.x && y == other.y;
         }
     }
-    template<typename T2>
-    bool operator!= (const vec2<T>& other) const {
+    template<typename T2> bool operator!= (const vec2<T>& other) const {
         return !(*this == other);
     }
 
@@ -144,9 +133,9 @@ template<typename T> struct vec2 {
         return *this == vec2<T>{0, 0};
     }
 
-    operator sf::Vector2f() const {return {x, y};}
-    operator sf::Vector2i() const {return {x, y};}
-    operator sf::Vector2u() const {return {x, y};}
+    operator sf::Vector2f() const { return {x, y}; }
+    operator sf::Vector2i() const { return {x, y}; }
+    operator sf::Vector2u() const { return {x, y}; }
 };
 
 using vec2f = vec2<float>;
