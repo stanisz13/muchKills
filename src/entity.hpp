@@ -33,4 +33,5 @@ struct Entity
     void draw(sf::RenderWindow& window);
 
     void loadSprite(sf::Texture& newTexture, const vec2f& scale);
+    void loadSprite(sf::Texture& newTexture) { loadSprite(newTexture, vec2f{1.f, 1.f}); };
 };

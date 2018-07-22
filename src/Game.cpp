@@ -56,11 +56,8 @@ namespace Game
             float inX = (float)sin(i) * rozmach;
             float inY = (float)cos(i) * rozmach;
             cur.setPos({inX, inY});
-            //cur.pos = vec2f{inX, inY};
-            //cur.sprite.setPosition(cur.pos);
 
             enemies.emplace_back(&cur);
-
         }
 
         boi.setBox(boi.pos, boi.sprite.getTexture()->getSize());

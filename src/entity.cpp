@@ -37,7 +37,7 @@ void Entity::deaccelerate(const float& deltaTime) {
 }
 
 void Entity::update(const float& deltaTime) {
-    //this->setSizeFromSprite();
+    this->setSizeFromSprite();
 
     this->move(acceleration*deltaTime);
     this->deaccelerate(deltaTime);
