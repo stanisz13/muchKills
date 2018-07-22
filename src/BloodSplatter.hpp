@@ -7,7 +7,7 @@
 
 struct BloodSplatter
 {
-    BloodSplatter(vec2f position, vec2f force, int dropsNum = 40);
+    BloodSplatter(vec2f position, vec2f force, int dropsNum = 20);
 
     void update(float deltaTime);
     void draw(sf::RenderWindow& window);
@@ -41,6 +41,15 @@ BloodSplatter::BloodSplatter(vec2f position, vec2f force, int dropsNum)
 
     drops.reserve(dropsNum);
 
+    sf::Texture* texts[] = {
+        &Storage<sf::Texture>::get("blood0"),
+        &Storage<sf::Texture>::get("blood1"),
+        &Storage<sf::Texture>::get("blood2"),
+        &Storage<sf::Texture>::get("blood3"),
+        &Storage<sf::Texture>::get("blood4")
+    };
+
+
     for(int i = 0; i < dropsNum; i++)
     {
         //float angleFract = (float)i/dropsNum;
@@ -57,9 +66,9 @@ BloodSplatter::BloodSplatter(vec2f position, vec2f force, int dropsNum)
         float speed = minSpeed + rand()%((int)maxSpeed-(int)minSpeed);
         float lifeTime = 0.5 + float(rand()%100+1)/100.f;
 
-        auto& tex = Storage<sf::Texture>::get("blood0");
+        //auto& tex = Storage<sf::Texture>::get("blood0");
         
-        drops.emplace_back(Pos, dir, speed, lifeTime, tex);
+        drops.emplace_back(Pos, dir, speed, lifeTime, *texts[rand()%5]);
     }
 }
 

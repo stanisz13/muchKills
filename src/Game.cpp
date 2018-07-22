@@ -22,12 +22,17 @@ namespace Game
 
     std::vector<BloodSplatter> bloodSplats;
 
+    vec2f mid;
+    
     void init()
     {
         window = Storage<sf::RenderWindow*>::get("window");
 
-        Storage<sf::Texture>::add("blood0", {});
-        Storage<sf::Texture>::get("blood0").loadFromFile("assets/blood0.png");
+        Storage<sf::Texture>::add("blood0", {}).loadFromFile("assets/blood0.png");
+        Storage<sf::Texture>::add("blood1", {}).loadFromFile("assets/blood1.png");
+        Storage<sf::Texture>::add("blood2", {}).loadFromFile("assets/blood2.png");
+        Storage<sf::Texture>::add("blood3", {}).loadFromFile("assets/blood3.png");
+        Storage<sf::Texture>::add("blood4", {}).loadFromFile("assets/blood4.png");
 
         boiTex.loadFromFile("assets/boi.jpg");
         enemyTex.loadFromFile("assets/enemy.jpg");
@@ -39,7 +44,6 @@ namespace Game
         boi.sprite.scale(0.1f, 0.1f);
 
         vec2u windowDim = window->getSize();
-        vec2f mid;
         mid.x = windowDim.x/2;
         mid.y = windowDim.y/2;
         say("mid: ", mid, "\n");
@@ -61,10 +65,12 @@ namespace Game
             enemies.emplace_back(cur);
         }
 
-        bloodSplats.emplace_back(mid, vec2f(20, 0));
     }
     void update(float deltaTime)
     {
+        if(bloodSplats.size() < 1)
+            bloodSplats.emplace_back(mid, vec2f(20, 0));
+
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
             window->close();
 
