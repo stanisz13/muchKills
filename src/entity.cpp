@@ -31,7 +31,7 @@ void Entity::update(const float& deltaTime) {
     auto s = boxxx.getSize();
     box.setSize(vec2f(s.x, s.y));
 
-    this->move(acceleration);
+    this->move(acceleration*deltaTime);
     this->deaccelerate(deltaTime);
 }
 void Entity::draw(sf::RenderWindow& window) {

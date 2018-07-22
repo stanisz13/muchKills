@@ -5,7 +5,7 @@
 struct Hero : Entity
 {
     float speed = 400;
-    float knockbackAff = 0.7;
+    float knockbackAff = 700.f;
 
     bool handleMovement(const float& deltaTime);
 };
