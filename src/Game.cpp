@@ -112,9 +112,9 @@ namespace Game
 
         for (auto&& e : enemies)
         {
-            e->update();
+            e->update(deltaTime);
         }
-        boi.update();
+        boi.update(deltaTime);
 
 
 
@@ -125,6 +125,7 @@ namespace Game
             if (collides(enemies[i]->box, boi.box))
             {
                 bloodSplats.emplace_back(enemies[i]->pos, vec2f(boi.pos - enemies[i]->pos).normalize() * -bloodForce);
+                boi.accelerate(vec2f(boi.pos - enemies[i]->pos).normalize() * bloodForce * 0.4f);
                 enemies.erase(enemies.begin() + i);
                 delete e;
             }
