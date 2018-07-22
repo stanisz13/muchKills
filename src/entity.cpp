@@ -6,3 +6,6 @@ void Entity::move(const vec2f& newPos) {
     pos = pos + newPos;
     sprite.setPosition(pos);
 }
+void Entity::update () {
+    box.pos = pos;
+}
