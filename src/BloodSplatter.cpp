@@ -1,7 +1,7 @@
 #include "BloodSplatter.hpp"
 
 
-BloodSplatter::BloodSplatter(vec2f position, vec2f force, int dropsNum)
+BloodSplatter::BloodSplatter(vec2f position, vec2f force, vec2f sped, int dropsNum)
 {
     pos = position;
 
@@ -26,10 +26,10 @@ BloodSplatter::BloodSplatter(vec2f position, vec2f force, int dropsNum)
 
         dir += force;
 
-        float maxSpeed = 100.f;
-        float minSpeed = 60.f;
+        float maxSpeed = sped.y;
+        float minSpeed = sped.x;
 
-        float speed = minSpeed + rand()%((int)maxSpeed-(int)minSpeed);
+        float speed = minSpeed + rand()%((int)maxSpeed-(int)minSpeed+1);
         float lifeTime = 0.5 + float(rand()%100+1)/100.f;
 
         //auto& tex = Storage<sf::Texture>::get("blood0");
