@@ -2,7 +2,7 @@
 
 void SoundManager::initSoundFiles()
 {
-    Storage<sf::SoundBuffer>::add("hit", {}).loadFromFile("hit.mp3");
+    Storage<sf::SoundBuffer>::add("hit", {}).loadFromFile("assets/hit.wav");
 }
 
 void SoundManager::play(const char* name)

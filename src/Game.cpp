@@ -77,6 +77,8 @@ namespace Game
         {
             e->setBox(e->pos, e->sprite.getTexture()->getSize());
         }
+
+        SoundManager::initSoundFiles();
     }
     void update(float deltaTime)
     {
@@ -125,6 +127,7 @@ namespace Game
             if (collides(enemies[i]->box, boi.box))
             {
                 bloodSplats.emplace_back(enemies[i]->pos, vec2f(boi.pos - enemies[i]->pos).normalize() * -bloodForce);
+                SoundManager::play("hit");
                 enemies.erase(enemies.begin() + i);
                 delete e;
             }
