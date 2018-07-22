@@ -8,19 +8,7 @@ int main()
 {
     srand(time(NULL));
 
-    vec2<int> vec;
-    vec -= 2;
-
-    Storage<int>::add("trojka", 3);
-    std::cout << Storage<int>::get("trojka") << '\n';
-
-    say << "Starting program...\n";
-    say("you can also use it like ", "this", 123, "\n");
-    std::vector<int> v = {1, 2, 3, 4};
-    std::pair<int, float> p = {12, 2.5};
-    say << "vec: " << v << ' ' << "pair: " << p << "\n";
-
-    sf::RenderWindow window(sf::VideoMode(1900, 900), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(1500, 900), "SFML works!");
     Storage<sf::RenderWindow*>::add("window", &window);
 
     Game::init();

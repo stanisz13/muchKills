@@ -17,7 +17,7 @@ namespace Game
     Hero boi;
     sf::Texture boiTex;
     sf::Texture enemyTex;
-    unsigned enemiesNumber = 1000;
+    unsigned enemiesNumber = 15;
     std::vector<Enemy> enemies;
 
     std::vector<BloodSplatter> bloodSplats;
@@ -51,7 +51,10 @@ namespace Game
             vec2u enemyTexDim = enemyTex.getSize();
             cur.sprite.setTextureRect(sf::IntRect(0, 0, enemyTexDim.x, enemyTexDim.y));
             cur.sprite.setColor(sf::Color(255, 255, 255, 255));
-            cur.pos = vec2f{windowDim.x / 2 + sin(i) * 300, windowDim.y / 2 + cos(i) * 300};
+            const float rozmach = 500.0;
+            float inX = (float)sin(i) * rozmach + windowDim.x / 2;
+            float inY = (float)cos(i) * rozmach + windowDim.y / 2;
+            cur.pos = vec2f{inX, inY};
             cur.sprite.setPosition(cur.pos);
             cur.sprite.scale(0.08f, 0.08f);
 
@@ -101,6 +104,10 @@ namespace Game
 
         for(int i = toDelete.size()-1; i >= 0; i--)
             bloodSplats.erase(bloodSplats.begin() + toDelete[i]);
+        for (auto&& e : enemies)
+        {
+            e.moveAccordingly(boi.pos, enemies, deltaTime);
+        }
     }
 
     void draw()
