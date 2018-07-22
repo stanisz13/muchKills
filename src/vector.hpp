@@ -108,6 +108,18 @@ template<typename T> struct vec2 {
         return *this;
     }
 
+    void rotate(double alpha) {
+        T X = x*cos(alpha) - y*sin(alpha);
+        T Y = x*sin(alpha) + y*cos(alpha);
+        x = X;
+        y = Y;
+        float epsilon = 1e-13;
+        if(x > -epsilon && x < epsilon)
+            x = 0;
+        if(y > -epsilon && y < epsilon)
+            y = 0;
+    }
+
     operator sf::Vector2f() const {return {x, y};}
     operator sf::Vector2i() const {return {x, y};}
     operator sf::Vector2u() const {return {x, y};}
