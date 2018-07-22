@@ -6,6 +6,10 @@ void bounding_box::setPos (vec2f newPos) {
     pos = newPos;
 }
 
+void bounding_box::setSize (vec2f newSize) {
+    size = newSize;
+}
+
 bool collides(const bounding_box& A, const bounding_box& B) {
     return  A.pos.x < B.pos.x + B.size.x &&
             A.pos.x + A.size.x > B.pos.x &&
