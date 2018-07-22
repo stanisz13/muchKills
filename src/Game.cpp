@@ -23,7 +23,7 @@ namespace Game
     std::vector<BloodSplatter> bloodSplats;
 
     vec2f mid;
-    
+
     void init()
     {
         window = Storage<sf::RenderWindow*>::get("window");
@@ -66,10 +66,17 @@ namespace Game
 
         }
 
-        
+
 
         bloodSplats.emplace_back(mid, vec2f(20, 0));
 
+        boi.setBox(boi.pos, boi.sprite.getSize());
+
+
+        for (auto&&e : enemies)
+        {
+            e.setBox(e.pos, e.sprite.getSize());
+        }
     }
     void update(float deltaTime)
     {
@@ -109,6 +116,14 @@ namespace Game
         }
         boi.update();
 
+
+        for (auto&& e : enemies)
+        {
+            if (collides(boi.box, e.box))
+            {
+                bloodSplats.emplace_back(e.pos, vec2f(boi.pos - e.pos));
+            }
+        }
 
 
 
