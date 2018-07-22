@@ -120,6 +120,26 @@ template<typename T> struct vec2 {
             y = 0;
     }
 
+    template<typename T2>
+    bool operator== (const vec2<T2>& other) const {
+        if(!std::is_same<T, T2>::value)
+            return 0;
+        if(std::is_same<T, float>::value || std::is_same<T, double>::value) {
+            double epsilon = 1e-13;
+            T deltaX = x-other.x;
+            T deltaY = y-other.y;
+            return  -elsilon < deltaX && deltaX < epsilon &&
+                    -epsilon < deltaY && deltaY < epsilon;
+        }
+        else {
+            return x == other.x && y == other.y;
+        }
+    }
+    template<typename T2>
+    bool operator!= (const vec2<T>& other) const {
+        return !(*this == other);
+    }
+
     operator sf::Vector2f() const {return {x, y};}
     operator sf::Vector2i() const {return {x, y};}
     operator sf::Vector2u() const {return {x, y};}
