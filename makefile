@@ -3,7 +3,7 @@ SRCS_DIR = src
 
 INCLUDE_FLAGS = -I./src
 LD_FLAGS = -lpthread -lsfml-graphics -lsfml-window -lsfml-system
-CXXFLAGS = -std=c++17 -Wall -Wshadow
+CXXFLAGS = -std=c++17 -Wall -Wshadow -fsanitize=undefined -fsanitize=address
 
 SRCS = $(shell find $(SRCS_DIR) -name '*.cpp' -or -name '*.c')
 OBJS = $(SRCS:%=$(BUILD_DIR)/%.o)

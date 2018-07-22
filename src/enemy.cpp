@@ -10,7 +10,7 @@ float max(const float a, const float b)
     return b;
 }
 
-void Enemy::moveAccordingly(const vec2f& toPos, const std::vector<Enemy>& enemies,
+void Enemy::moveAccordingly(const vec2f& toPos, const std::vector<Enemy*>& enemies,
 const float deltaTime)
 {
     vec2f fromOthers(0, 0), fromMed(0, 0);
@@ -18,7 +18,7 @@ const float deltaTime)
     vec2f med(0, 0);
     for (auto&& e : enemies)
     {
-        med += e.pos;
+        med += e->pos;
     }
     med /= enemies.size();
 
@@ -26,7 +26,7 @@ const float deltaTime)
 
     for (auto&& e : enemies)
     {
-        vec2f eToMe =  vec2f(e.pos - pos);
+        vec2f eToMe =  vec2f(e->pos - pos);
         eToMe *= -1.0f;
         float dEToMe = eToMe.lenght();
         eToMe.normalize();

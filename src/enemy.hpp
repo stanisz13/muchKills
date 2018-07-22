@@ -17,7 +17,7 @@ struct Enemy : Entity
 
 
 
-    void moveAccordingly(const vec2f& toPos, const std::vector<Enemy>& enemies,
+    void moveAccordingly(const vec2f& toPos, const std::vector<Enemy*>& enemies,
     const float deltaTime);
 
 };

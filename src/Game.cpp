@@ -20,7 +20,8 @@ namespace Game
     sf::Texture boiTex;
     sf::Texture enemyTex;
     unsigned enemiesNumber = 15;
-    std::vector<Enemy> enemies;
+    float bloodForce = 15.0f;
+    std::vector<Enemy*> enemies;
 
 
     std::vector<BloodSplatter> bloodSplats;
@@ -53,7 +54,7 @@ namespace Game
 
         for(unsigned i = 0; i<enemiesNumber; ++i)
         {
-            Enemy cur;
+            Enemy &cur = *new Enemy;
             cur.sprite.setTexture(enemyTex);
             vec2u enemyTexDim = enemyTex.getSize();
             cur.sprite.setTextureRect(sf::IntRect(0, 0, enemyTexDim.x, enemyTexDim.y));
@@ -65,7 +66,8 @@ namespace Game
             cur.sprite.setPosition(cur.pos);
             cur.sprite.scale(0.08f, 0.08f);
 
-            enemies.emplace_back(cur);
+            enemies.emplace_back(&cur);
+
         }
 
         boi.setBox(boi.pos, boi.sprite.getTexture()->getSize());
@@ -73,7 +75,7 @@ namespace Game
 
         for (auto&&e : enemies)
         {
-            e.setBox(e.pos, e.sprite.getTexture()->getSize());
+            e->setBox(e->pos, e->sprite.getTexture()->getSize());
         }
     }
     void update(float deltaTime)
@@ -110,37 +112,25 @@ namespace Game
 
         for (auto&& e : enemies)
         {
-            e.update();
+            e->update();
         }
         boi.update();
 
 
 
 
-
-
-
-        std::vector<unsigned> toDel;
-        unsigned a = 0;
-        for (auto&& e : enemies)
+        for (int i = enemies.size() - 1; i>= 0; --i)
         {
-            if (collides(boi.box, e.box))
+            Enemy* e = enemies[i];
+            if (collides(enemies[i]->box, boi.box))
             {
-                bloodSplats.emplace_back(e.pos, vec2f(boi.pos - e.pos).normalize() * -7.5);
-                toDel.emplace_back(a);
+                bloodSplats.emplace_back(enemies[i]->pos, vec2f(boi.pos - enemies[i]->pos).normalize() * -bloodForce);
+                enemies.erase(enemies.begin() + i);
+                delete e;
             }
-
-            a++;
         }
 
-        /*
-        for (int i = toDel.size() - 1; i>= 0; --i)
-        {
-            enemies.erase(enemies.begin() + toDel[i]);
-        }*/
-
-
-
+        enemiesNumber = enemies.size();
 
 
         std::vector<int> toDelete;
@@ -156,7 +146,7 @@ namespace Game
             bloodSplats.erase(bloodSplats.begin() + toDelete[i]);
         for (auto&& e : enemies)
         {
-            e.moveAccordingly(boi.pos, enemies, deltaTime);
+            e->moveAccordingly(boi.pos, enemies, deltaTime);
         }
     }
 
@@ -164,22 +154,13 @@ namespace Game
     {
         for (unsigned i = 0; i<enemiesNumber; ++i)
         {
-            window->draw(enemies[i].sprite);
+            window->draw(enemies[i]->sprite);
 
-            auto bound = enemies[i].sprite.getGlobalBounds();
-            sf::RectangleShape box(vec2f(bound.width, bound.height));
-            box.setPosition(enemies[i].pos);
-            box.setFillColor(sf::Color(255, 0, 0, 250));
-            window->draw(box);
         }
         //std::this_thread::sleep_for(std::chrono::seconds(10));
 
         window->draw(boi.sprite);
-        auto boundBoi = boi.sprite.getGlobalBounds();
-        sf::RectangleShape boxBoi(vec2f(boundBoi.width, boundBoi.height));
-        boxBoi.setPosition(boi.pos);
-        boxBoi.setFillColor(sf::Color(0, 255, 0, 250));
-        window->draw(boxBoi);
+
 
 
         for(auto& bloodSplat : bloodSplats)
