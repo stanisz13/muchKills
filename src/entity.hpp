@@ -13,8 +13,11 @@ struct Entity
 
     Entity(){}
 
-    void setBox(vec2f pos, vec2f size);
+    void setBox(vec2f newPos, vec2f newSize);
 
-    void move(const vec2f& newPos);
+    void setPos(const vec2f& newPos);
+    void move(const vec2f& deltaPos);
+
     void update();
+    void draw(sf::RenderWindow& window);
 };
