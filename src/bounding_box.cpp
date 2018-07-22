@@ -16,10 +16,3 @@ bool collides(const bounding_box& A, const bounding_box& B) {
             A.pos.y < B.pos.y + B.size.y &&
             A.pos.y + A.size.y > B.pos.y;
 }
-
-void bounding_box::updateScale()
-{
-    sf::FloatRect bounds;
-    setPos(vec2f(bounds.left, bounds.top));
-    setSize(vec2f(bounds.width, bounds.height));
-}

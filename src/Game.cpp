@@ -117,13 +117,16 @@ namespace Game
 
 
 
+
+
+
         std::vector<unsigned> toDel;
         unsigned a = 0;
         for (auto&& e : enemies)
         {
             if (collides(boi.box, e.box))
             {
-                bloodSplats.emplace_back(e.pos, vec2f(boi.pos - e.pos));
+                bloodSplats.emplace_back(e.pos, vec2f(boi.pos - e.pos).normalize() * -7.5);
                 toDel.emplace_back(a);
             }
 
@@ -172,20 +175,11 @@ namespace Game
         //std::this_thread::sleep_for(std::chrono::seconds(10));
 
         window->draw(boi.sprite);
-
-        for (unsigned i = 0; i<enemiesNumber; ++i)
-        {
-            sf::RectangleShape boxSprite;
-            boxSprite.setFillColor(sf::Color::Green);
-            
-            boxSprite.setPosition(enemies[i].pos);
-            say<<enemies[i].pos<<"\n";
-            sf::Vector2u dim = enemies[i].box.size;
-            const sf::Vector2f toPassLul(dim.x, dim.y);
-            boxSprite.setSize(toPassLul);
-
-            window->draw(boxSprite);
-        }
+        auto boundBoi = boi.sprite.getGlobalBounds();
+        sf::RectangleShape boxBoi(vec2f(boundBoi.width, boundBoi.height));
+        boxBoi.setPosition(boi.pos);
+        boxBoi.setFillColor(sf::Color(0, 255, 0, 250));
+        window->draw(boxBoi);
 
 
         for(auto& bloodSplat : bloodSplats)

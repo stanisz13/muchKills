@@ -1,4 +1,5 @@
 #include "entity.hpp"
+#include <SFML/Graphics.hpp>
 
 using namespace sf;
 
@@ -17,7 +18,13 @@ void Entity::move(const vec2f& deltaPos) {
 }
 
 void Entity::update () {
-    box.updateScale();
+    auto bound = sprite.getGlobalBounds();
+    sf::RectangleShape boxxx(vec2f(bound.width, bound.height));
+    boxxx.setPosition(pos);
+    box.setPos(pos);
+    auto s = boxxx.getSize();
+    box.setSize(vec2f(s.x, s.y));
+
 }
 void Entity::draw(sf::RenderWindow& window) {
     window.draw(sprite);

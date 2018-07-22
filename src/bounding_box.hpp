@@ -10,7 +10,6 @@ struct bounding_box {
     void setPos(vec2f newPos);
     void setSize(vec2f newSize);
 
-    void updateScale();
 };
 
 bool collides(const bounding_box& A, const bounding_box& B);
