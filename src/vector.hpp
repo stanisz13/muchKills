@@ -128,7 +128,7 @@ template<typename T> struct vec2 {
             double epsilon = 1e-13;
             T deltaX = x-other.x;
             T deltaY = y-other.y;
-            return  -elsilon < deltaX && deltaX < epsilon &&
+            return  -epsilon < deltaX && deltaX < epsilon &&
                     -epsilon < deltaY && deltaY < epsilon;
         }
         else {
@@ -138,6 +138,10 @@ template<typename T> struct vec2 {
     template<typename T2>
     bool operator!= (const vec2<T>& other) const {
         return !(*this == other);
+    }
+
+    bool isZero() {
+        return *this == vec2<T>{0, 0};
     }
 
     operator sf::Vector2f() const {return {x, y};}
