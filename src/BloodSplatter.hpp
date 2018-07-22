@@ -25,6 +25,7 @@ struct BloodSplatter
         bool isFinished() const {return timeLived > lifeTime;};
 
         vec2f dir;
+        float speed;
         float lifeTime;
         float timeLived;
         float initialSpeed;
@@ -42,7 +43,7 @@ BloodSplatter::BloodSplatter(vec2f position, vec2f force, int dropsNum)
 
     for(int i = 0; i < dropsNum; i++)
     {
-        float angleFract = (float)i/dropsNum;
+        //float angleFract = (float)i/dropsNum;
 
         vec2f Pos = pos;
         vec2f dir = vec2f(rand()%(2*dropsNum+1)-dropsNum, rand()%(2*dropsNum+1)-dropsNum);
