@@ -51,6 +51,7 @@ namespace Game
         for(unsigned i = 0; i<enemiesNumber; ++i)
         {
             Enemy &cur = *new Enemy;
+
             cur.loadSprite(enemyTex, {0.08f, 0.08f});
 
             const float rozmach = 500.0;
@@ -84,7 +85,7 @@ namespace Game
             if (collides(enemies[i]->box, boi.box))
             {
                 boi.accelerate(vec2f(boi.pos - enemies[i]->pos).normalize() * boi.knockbackAff);
-                bloodSplats.emplace_back(enemies[i]->pos, vec2f(boi.pos - enemies[i]->pos).normalize() * -bloodForce*0.4, vec2f(0, 500), 50);
+                bloodSplats.emplace_back(enemies[i]->mid(), vec2f(boi.mid() - enemies[i]->mid()).normalize() * -bloodForce*0.4, vec2f(0, 500), 50);
                 enemies.erase(enemies.begin() + i);
                 SoundManager::play("hit");
                 delete e;
@@ -113,25 +114,16 @@ namespace Game
 
     void draw()
     {
-        for (unsigned i = 0; i<enemiesNumber; ++i)
-        {
-            window->draw(enemies[i]->sprite);
-
-        }
-        //std::this_thread::sleep_for(std::chrono::seconds(10));
+        boi.draw(*window);
+        for(Enemy* e : enemies)
+            e->draw(*window);
         for(auto& bloodSplat : bloodSplats)
             bloodSplat.draw(*window);
-
-        window->draw(boi.sprite);
-
-
-
     }
 
     void deinit()
     {
         for (unsigned i = 0; i<enemies.size(); ++i)
             delete enemies[i];
-
     }
 }

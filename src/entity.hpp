@@ -23,6 +23,7 @@ struct Entity
     void setPos(const vec2f& newPos);
     void setSize(const vec2f& newSize);
     void setSizeFromSprite();
+    inline vec2f mid() { return (pos*2 + size)/2; };
 
     void move(const vec2f& deltaPos);
 
