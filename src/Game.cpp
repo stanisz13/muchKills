@@ -41,11 +41,7 @@ namespace Game
         boiTex.loadFromFile("assets/boi.jpg");
         enemyTex.loadFromFile("assets/enemy.jpg");
 
-        boi.sprite.setTexture(boiTex);
-        vec2u boiTexDim = boiTex.getSize();
-        boi.sprite.setTextureRect(sf::IntRect(0, 0, boiTexDim.x, boiTexDim.y));
-        boi.sprite.setColor(sf::Color(255, 255, 255, 255));
-        boi.sprite.scale(0.1f, 0.1f);
+        boi.loadSprite(boiTex, {0.1f, 0.1f});
 
         vec2u windowDim = window->getSize();
         mid.x = windowDim.x/2;
@@ -55,16 +51,13 @@ namespace Game
         for(unsigned i = 0; i<enemiesNumber; ++i)
         {
             Enemy &cur = *new Enemy;
-            cur.sprite.setTexture(enemyTex);
-            vec2u enemyTexDim = enemyTex.getSize();
-            cur.sprite.setTextureRect(sf::IntRect(0, 0, enemyTexDim.x, enemyTexDim.y));
-            cur.sprite.setColor(sf::Color(255, 255, 255, 255));
+            cur.loadSprite(enemyTex, {0.08f, 0.08f});
             const float rozmach = 500.0;
             float inX = (float)sin(i) * rozmach;
             float inY = (float)cos(i) * rozmach;
-            cur.pos = vec2f{inX, inY};
-            cur.sprite.setPosition(cur.pos);
-            cur.sprite.scale(0.08f, 0.08f);
+            cur.setPos({inX, inY});
+            //cur.pos = vec2f{inX, inY};
+            //cur.sprite.setPosition(cur.pos);
 
             enemies.emplace_back(&cur);
 
