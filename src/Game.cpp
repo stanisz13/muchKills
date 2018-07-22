@@ -9,6 +9,7 @@
 #include "Logger.hpp"
 #include "hero.hpp"
 #include <vector.hpp>
+#include "BloodSplatter.hpp"
 
 namespace Game
 {
@@ -19,10 +20,14 @@ namespace Game
     unsigned enemiesNumber = 1000;
     std::vector<Enemy> enemies;
 
+    std::vector<BloodSplatter> bloodSplats;
 
     void init()
     {
         window = Storage<sf::RenderWindow*>::get("window");
+
+        Storage<sf::Texture>::add("blood0", {});
+        Storage<sf::Texture>::get("blood0").loadFromFile("assets/blood0.png");
 
         boiTex.loadFromFile("assets/boi.jpg");
         enemyTex.loadFromFile("assets/enemy.jpg");
@@ -34,6 +39,10 @@ namespace Game
         boi.sprite.scale(0.1f, 0.1f);
 
         vec2u windowDim = window->getSize();
+        vec2f mid;
+        mid.x = windowDim.x/2;
+        mid.y = windowDim.y/2;
+        say("mid: ", mid, "\n");
 
         for(unsigned i = 0; i<enemiesNumber; ++i)
         {
@@ -48,6 +57,8 @@ namespace Game
 
             enemies.emplace_back(cur);
         }
+
+        bloodSplats.emplace_back(mid, vec2f(20, 0));
     }
     void update(float deltaTime)
     {
@@ -77,7 +88,19 @@ namespace Game
         toMove *= boi.speed * deltaTime;
 
         boi.move(toMove);
+        
 
+        std::vector<int> toDelete;
+        for(auto& bloodSplat : bloodSplats)
+        {
+            bloodSplat.update(deltaTime);
+
+            if(bloodSplat.isFinished())
+                toDelete.emplace_back(&bloodSplat-&bloodSplats.front());
+        }
+
+        for(int i = toDelete.size()-1; i >= 0; i--)
+            bloodSplats.erase(bloodSplats.begin() + toDelete[i]);
     }
 
     void draw()
@@ -89,6 +112,9 @@ namespace Game
         //std::this_thread::sleep_for(std::chrono::seconds(10));
 
         window->draw(boi.sprite);
+
+        for(auto& bloodSplat : bloodSplats)
+            bloodSplat.draw(*window);
     }
 
     void deinit()

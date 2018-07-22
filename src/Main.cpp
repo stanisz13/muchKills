@@ -6,6 +6,8 @@
 
 int main()
 {
+    srand(time(NULL));
+
     vec2<int> vec;
     vec -= 2;
 
