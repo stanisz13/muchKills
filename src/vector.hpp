@@ -52,7 +52,7 @@ template<typename T> struct vec2 {
     }
     template<typename T2>
     vec2<T> operator* (T2 num) {
-        return {x*num, y*num};
+        return {x*(T)num, y*(T)num};
     }
 
     template<typename T2> void operator+= (T2 num) {

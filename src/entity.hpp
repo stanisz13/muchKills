@@ -11,7 +11,7 @@ struct Entity
     vec2f pos;
     bounding_box box;
 
-    vec2f acceleration;
+    vec2f acceleration = {0.0f, 0.0f};
     float friction = 0.1f;
     float deacceleration_time = 0.3f;
 
