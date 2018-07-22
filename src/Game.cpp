@@ -63,7 +63,12 @@ namespace Game
             cur.sprite.scale(0.08f, 0.08f);
 
             enemies.emplace_back(cur);
+
         }
+
+        
+
+        bloodSplats.emplace_back(mid, vec2f(20, 0));
 
     }
     void update(float deltaTime)
@@ -97,7 +102,15 @@ namespace Game
         toMove *= boi.speed * deltaTime;
 
         boi.move(toMove);
-        
+
+        for (auto&& e : enemies)
+        {
+            e.update();
+        }
+        boi.update();
+
+
+
 
         std::vector<int> toDelete;
         for(auto& bloodSplat : bloodSplats)
