@@ -16,7 +16,7 @@ namespace Game
     Hero boi;
     sf::Texture boiTex;
     sf::Texture enemyTex;
-    unsigned enemiesNumber = 1000;
+    unsigned enemiesNumber = 15;
     std::vector<Enemy> enemies;
 
 
@@ -42,8 +42,9 @@ namespace Game
             vec2u enemyTexDim = enemyTex.getSize();
             cur.sprite.setTextureRect(sf::IntRect(0, 0, enemyTexDim.x, enemyTexDim.y));
             cur.sprite.setColor(sf::Color(255, 255, 255, 255));
-            float inX = (float)sin(i) * 300 + windowDim.x / 2;
-            float inY = (float)cos(i) * 300 + windowDim.y / 2;
+            const float rozmach = 500.0;
+            float inX = (float)sin(i) * rozmach + windowDim.x / 2;
+            float inY = (float)cos(i) * rozmach + windowDim.y / 2;
             cur.pos = vec2f{inX, inY};
             cur.sprite.setPosition(cur.pos);
             cur.sprite.scale(0.08f, 0.08f);
@@ -80,6 +81,10 @@ namespace Game
 
         boi.move(toMove);
 
+        for (auto&& e : enemies)
+        {
+            e.moveAccordingly(boi.pos, enemies, deltaTime);
+        }
     }
 
     void draw()

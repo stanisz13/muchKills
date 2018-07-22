@@ -8,7 +8,6 @@ struct Entity
 {
     sf::Sprite sprite;
     vec2f pos;
-    float speed = 400;
 
     void move(const vec2f& newPos);
 };
