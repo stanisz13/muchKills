@@ -13,7 +13,6 @@
 
 
 
-
 namespace Game
 {
     sf::RenderWindow* window;
@@ -60,19 +59,14 @@ namespace Game
             cur.sprite.setTextureRect(sf::IntRect(0, 0, enemyTexDim.x, enemyTexDim.y));
             cur.sprite.setColor(sf::Color(255, 255, 255, 255));
             const float rozmach = 500.0;
-            float inX = (float)sin(i) * rozmach + windowDim.x / 2;
-            float inY = (float)cos(i) * rozmach + windowDim.y / 2;
+            float inX = (float)sin(i) * rozmach;
+            float inY = (float)cos(i) * rozmach;
             cur.pos = vec2f{inX, inY};
             cur.sprite.setPosition(cur.pos);
             cur.sprite.scale(0.08f, 0.08f);
 
             enemies.emplace_back(cur);
-
         }
-
-
-
-        bloodSplats.emplace_back(mid, vec2f(20, 0));
 
         boi.setBox(boi.pos, boi.sprite.getTexture()->getSize());
 
@@ -85,7 +79,7 @@ namespace Game
     void update(float deltaTime)
     {
         if(bloodSplats.size() < 1)
-            bloodSplats.emplace_back(mid, vec2f(20, 0));
+            bloodSplats.emplace_back(vec2f(0, 0), vec2f(20, 0));
 
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
             window->close();
@@ -164,15 +158,20 @@ namespace Game
     }
 
     void draw()
-    {/*
+    {
         for (unsigned i = 0; i<enemiesNumber; ++i)
         {
             window->draw(enemies[i].sprite);
+
+            auto bound = enemies[i].sprite.getGlobalBounds();
+            sf::RectangleShape box(vec2f(bound.width, bound.height));
+            box.setPosition(enemies[i].pos);
+            box.setFillColor(sf::Color(255, 0, 0, 250));
+            window->draw(box);
         }
         //std::this_thread::sleep_for(std::chrono::seconds(10));
 
         window->draw(boi.sprite);
-*/
 
         for (unsigned i = 0; i<enemiesNumber; ++i)
         {
