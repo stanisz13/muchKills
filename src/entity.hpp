@@ -13,7 +13,7 @@ struct Entity
 
     Entity(){}
 
-    void setBox(vec2f newPos, vec2f newSize);
+    void setBox(vec2f pos, vec2f size);
 
     void setPos(const vec2f& newPos);
     void move(const vec2f& deltaPos);

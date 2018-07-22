@@ -11,6 +11,9 @@
 #include <vector.hpp>
 #include "BloodSplatter.hpp"
 
+
+
+
 namespace Game
 {
     sf::RenderWindow* window;
@@ -19,6 +22,7 @@ namespace Game
     sf::Texture enemyTex;
     unsigned enemiesNumber = 15;
     std::vector<Enemy> enemies;
+
 
     std::vector<BloodSplatter> bloodSplats;
 
@@ -70,12 +74,12 @@ namespace Game
 
         bloodSplats.emplace_back(mid, vec2f(20, 0));
 
-        boi.setBox(boi.pos, boi.sprite.getSize());
+        boi.setBox(boi.pos, boi.sprite.getTexture()->getSize());
 
 
         for (auto&&e : enemies)
         {
-            e.setBox(e.pos, e.sprite.getSize());
+            e.setBox(e.pos, e.sprite.getTexture()->getSize());
         }
     }
     void update(float deltaTime)
@@ -117,13 +121,28 @@ namespace Game
         boi.update();
 
 
+
+
+        std::vector<unsigned> toDel;
+        unsigned a = 0;
         for (auto&& e : enemies)
         {
             if (collides(boi.box, e.box))
             {
                 bloodSplats.emplace_back(e.pos, vec2f(boi.pos - e.pos));
+                toDel.emplace_back(a);
             }
+
+            a++;
         }
+
+        /*
+        for (int i = toDel.size() - 1; i>= 0; --i)
+        {
+            enemies.erase(enemies.begin() + toDel[i]);
+        }*/
+
+
 
 
 
@@ -145,7 +164,7 @@ namespace Game
     }
 
     void draw()
-    {
+    {/*
         for (unsigned i = 0; i<enemiesNumber; ++i)
         {
             window->draw(enemies[i].sprite);
@@ -153,6 +172,22 @@ namespace Game
         //std::this_thread::sleep_for(std::chrono::seconds(10));
 
         window->draw(boi.sprite);
+*/
+
+        for (unsigned i = 0; i<enemiesNumber; ++i)
+        {
+            sf::RectangleShape boxSprite;
+            boxSprite.setFillColor(sf::Color::Green);
+            
+            boxSprite.setPosition(enemies[i].pos);
+            say<<enemies[i].pos<<"\n";
+            sf::Vector2u dim = enemies[i].box.size;
+            const sf::Vector2f toPassLul(dim.x, dim.y);
+            boxSprite.setSize(toPassLul);
+
+            window->draw(boxSprite);
+        }
+
 
         for(auto& bloodSplat : bloodSplats)
             bloodSplat.draw(*window);

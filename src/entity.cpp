@@ -17,6 +17,7 @@ void Entity::move(const vec2f& deltaPos) {
 }
 
 void Entity::update () {
+    box.updateScale();
 }
 void Entity::draw(sf::RenderWindow& window) {
     window.draw(sprite);
