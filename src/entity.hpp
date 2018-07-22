@@ -12,6 +12,9 @@ struct Entity
     bounding_box box;
 
     Entity(){}
+
+    void setBox(vec2f pos, vec2f size)();
+
     void move(const vec2f& newPos);
     void update();
 };
