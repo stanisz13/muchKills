@@ -52,20 +52,13 @@ namespace Game
         {
             Enemy &cur = *new Enemy;
             cur.loadSprite(enemyTex, {0.08f, 0.08f});
+
             const float rozmach = 500.0;
             float inX = (float)sin(i) * rozmach;
             float inY = (float)cos(i) * rozmach;
             cur.setPos({inX, inY});
 
             enemies.emplace_back(&cur);
-        }
-
-        boi.setBox(boi.pos, boi.sprite.getTexture()->getSize());
-
-
-        for (auto&&e : enemies)
-        {
-            e->setBox(e->pos, e->sprite.getTexture()->getSize());
         }
 
         SoundManager::initSoundFiles();
@@ -75,36 +68,13 @@ namespace Game
         if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Escape))
             window->close();
 
-        vec2f toMove(0, 0);
-
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
-        {
-            toMove += vec2f(0, -1);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
-        {
-            toMove += vec2f(0, 1);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
-        {
-            toMove += vec2f(1, 0);
-        }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
-        {
-            toMove += vec2f(-1, 0);
-        }
-
-        toMove.normalize();
-        toMove *= boi.speed * deltaTime;
-
-        boi.move(toMove);
+        boi.handleMovement(deltaTime);
 
         for (auto&& e : enemies)
         {
             e->update(deltaTime);
         }
         boi.update(deltaTime);
-
 
 
 

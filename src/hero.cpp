@@ -1,7 +1,7 @@
 #include "hero.hpp"
 
 bool Hero::handleMovement(const float& deltaTime) {
-    vec2f direction;
+    vec2f direction{0, 0};
 
     if(sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
         direction += vec2f{0, -1};
