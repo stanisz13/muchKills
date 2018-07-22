@@ -3,9 +3,8 @@
 #include <vector>
 #include <Storage.hpp>
 
-struct soundManager
+struct SoundManager
 {
-    Storage
-    static void loadSoundFiles();
-
+    static void initSoundFiles();
+    static void play(const char* name);
 };

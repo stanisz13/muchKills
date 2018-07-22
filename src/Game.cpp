@@ -10,7 +10,7 @@
 #include "hero.hpp"
 #include <vector.hpp>
 #include "BloodSplatter.hpp"
-
+#include <sound.hpp>
 
 
 namespace Game
@@ -166,7 +166,8 @@ namespace Game
 
     void deinit()
     {
-
+        for (unsigned i = 0; i<enemies.size(); ++i)
+            delete enemies[i];
 
     }
 }
