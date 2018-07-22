@@ -121,7 +121,7 @@ namespace Game
             Enemy* e = enemies[i];
             if (collides(enemies[i]->box, boi.box))
             {
-                bloodSplats.emplace_back(enemies[i]->pos, vec2f(boi.pos - enemies[i]->pos).normalize() * -bloodForce, vec2f(60, 200), 40);
+                bloodSplats.emplace_back(enemies[i]->pos, vec2f(boi.pos - enemies[i]->pos).normalize() * -bloodForce*0.4, vec2f(0, 500), 50);
                 enemies.erase(enemies.begin() + i);
                 delete e;
             }
